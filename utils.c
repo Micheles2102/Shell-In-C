@@ -24,6 +24,7 @@ char* read_line(ssize_t* read,char* cwd){
         size_t len=0; // serve per riuscire a ridimensionare dinamicamente la dimensione del buffer
         printf(RED" %s"RST"@%s :"G" %s$ "RST,username,hostname,cwd);
         *read=getline(&input,&len,stdin);
+        //elimino il carattere di andare a campo per gestire semplici comandi
         if (input[*read - 1] == '\n') {
             input[*read - 1] = '\0';
         }
@@ -78,6 +79,19 @@ void tokenizer(char* phrase,char** token_phrase){
         counter++;
     }
     token_phrase[counter]=NULL;
+}
+
+
+void controllo_uscita(char* line, char** toks){
+    if(strcmp(toks[0],"exit")==0){
+        free(line);
+        for (int i = 0; toks[i] != NULL; i++) {
+            free(toks[i]);
+        }
+        printf(RED"Fine Ricetta Ricevuto, esco...\n"RST);
+        sleep(1);
+        exit(0);
+    }
 }
 
 //wonder if i have to use fprintf 
