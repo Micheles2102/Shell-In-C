@@ -3,7 +3,11 @@
 int status2=0;
 ls_command ls_build[]=
 {
-    {.ls_command_to_execute="-l",.foo=pistacchio_ls},
+    {.ls_command_to_execute=" ",.foo=torroncino_ls},//ls 
+    {.ls_command_to_execute="-l",.foo=pistacchio_ls},//ls -l
+    {.ls_command_to_execute="-A",.foo=mario_ls},//ls -A
+    {.ls_command_to_execute="-a",.foo=luigi_ls},//ls -a
+    {.ls_command_to_execute="-c",.foo=panino_ls},
     {.ls_command_to_execute=NULL}, //Sentinel
 };
 
@@ -72,11 +76,22 @@ int cannolo_ls(char **toks){
         exit(1);
     }
     
-    
-    if(!strcmp(toks[1],ls_build[0].ls_command_to_execute)){
+    int i=1;
+    if(toks[1]==NULL){//if is only ls
         if(status2=(ls_build[0].foo)(path)){
             printf("%s failed\n", ls_build[0].ls_command_to_execute);
             exit(1);
+        }
+    }
+    else{
+        while(ls_build[i].ls_command_to_execute){
+            if(!strcmp(toks[1],ls_build[i].ls_command_to_execute)){
+                if(status2=(ls_build[i].foo)(path)){
+                    printf("%s failed\n", ls_build[i].ls_command_to_execute);
+                    exit(1);
+                }
+            }
+            i++;
         }
     }
     /*

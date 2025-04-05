@@ -106,6 +106,14 @@ void Chdirs(const char* path,char* cwd){
     }
 }
 
+int comparefiletime(const void *a,const void *b){
+    const FileInfo *fileA=(const FileInfo *)a;
+    const FileInfo *fileB=(const FileInfo *)b;
+    if(fileA->time < fileB->time)return -1;
+    if(fileA->time < fileB->time)return 1;
+    return 0;
+}
+
 const char* get_permission(mode_t mode){
     static char perms[10];
 

@@ -58,6 +58,8 @@ typedef struct build{
 int carbonara_echo(char **av);
 int pizza_pwd(char **av);
 int cannolo_ls(char** av);
+
+
 /*
 ADD Struct for ls_Command + function with command
 */
@@ -66,7 +68,16 @@ typedef struct builds{
     int (*foo)(DIR* path);
 }ls_command;
 
+typedef struct{
+    char *name;
+    time_t time;
+}FileInfo;
+
+int torroncino_ls(DIR* path);
 int pistacchio_ls(DIR* path);
+int mario_ls(DIR* path);
+int luigi_ls(DIR* path);
+int panino_ls(DIR* path);
 /*
 ADD Function
 */
@@ -79,4 +90,5 @@ int conteggio_token(char* str);
 void controllo_uscita(char* line,char** toks);
 void Chdirs(const char *path,char* cwd);
 const char* get_permission(mode_t mode);
+int comparefiletime(const void *a, const void *b);
 #endif
