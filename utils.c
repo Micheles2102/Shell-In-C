@@ -94,7 +94,6 @@ void controllo_uscita(char* line, char** toks){
     }
 }
 
-//wonder if i have to use fprintf 
 void Chdirs(const char* path,char* cwd){
     if(!path){
         printf(G"%s\n"RST,cwd);
@@ -106,3 +105,35 @@ void Chdirs(const char* path,char* cwd){
         getcwd(cwd,sizeof(cwd));
     }
 }
+
+const char* get_permission(mode_t mode){
+    static char perms[10];
+
+    // Tipo di file
+    if (S_ISDIR(mode))
+        perms[0] = 'd';  // directory
+    else if (S_ISLNK(mode))
+        perms[0] = 'l';  // symbolic link
+    else if (S_ISREG(mode))
+        perms[0] = '-';  // regular file
+    else
+        perms[0] = '?';  // unknown type
+
+    // Permessi di lettura, scrittura, esecuzione per proprietario, gruppo, altri
+    perms[1] = (mode & S_IRUSR) ? 'r' : '-';
+    perms[2] = (mode & S_IWUSR) ? 'w' : '-';
+    perms[3] = (mode & S_IXUSR) ? 'x' : '-';
+
+    perms[4] = (mode & S_IRGRP) ? 'r' : '-';
+    perms[5] = (mode & S_IWGRP) ? 'w' : '-';
+    perms[6] = (mode & S_IXGRP) ? 'x' : '-';
+
+    perms[7] = (mode & S_IROTH) ? 'r' : '-';
+    perms[8] = (mode & S_IWOTH) ? 'w' : '-';
+    perms[9] = (mode & S_IXOTH) ? 'x' : '-';
+
+    perms[10] = '\0';  // termina la stringa
+
+    return perms;
+}
+

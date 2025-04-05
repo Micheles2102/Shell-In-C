@@ -4,20 +4,24 @@
 ** Standard library includes for core functionality:
 ** unistd.h    - POSIX operating system API (fork, exec, etc.)
 ** stdlib.h    - General utilities (malloc, free, exit)
+** time.h      - For ctime()
 ** stdio.h     - Input/output operations
 ** errno.h     - System error numbers
 ** string.h    - String manipulation
 ** stdbool.h   - Add bool
+** sys/stat.h  - for stat() and file info (permessi, dimensione, tipo, timestamp…)
 ** sys/wait.h  - Process control (wait, waitpid) ?
 ** sysexits.h  - System exit values ?
 ** dirent.h    - For ls command
 */
 #include <unistd.h>
+#include <time.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/types.h> //for different type as DIR
+#include <sys/stat.h>
 #include <dirent.h> 
 
 
@@ -42,7 +46,7 @@ ADD SOME MACROS
 */
 
 #define NPOW "\n\n\n\n"
-
+#define LINE "-------------------------------------------------------------------\n"
 /*
 ADD Struct for Command + function with command
 */
@@ -74,5 +78,5 @@ void tokenizer(char* phrase,char** token_phrase);
 int conteggio_token(char* str);
 void controllo_uscita(char* line,char** toks);
 void Chdirs(const char *path,char* cwd);
-
+const char* get_permission(mode_t mode);
 #endif
