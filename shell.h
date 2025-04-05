@@ -10,12 +10,15 @@
 ** stdbool.h   - Add bool
 ** sys/wait.h  - Process control (wait, waitpid) ?
 ** sysexits.h  - System exit values ?
+** dirent.h    - For ls command
 */
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <sys/types.h> //for different type as DIR
+#include <dirent.h> 
 
 
 #define MAX_PATH 1024
@@ -49,7 +52,17 @@ typedef struct build{
 }command;
 
 int carbonara_echo(char **av);
+int pizza_pwd(char **av);
+int cannolo_ls(char** av);
+/*
+ADD Struct for ls_Command + function with command
+*/
+typedef struct builds{
+    const char* ls_command_to_execute;
+    int (*foo)(DIR* path);
+}ls_command;
 
+int pistacchio_ls(DIR* path);
 /*
 ADD Function
 */
