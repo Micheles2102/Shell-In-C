@@ -42,7 +42,7 @@ ssize_t read_right(ssize_t* read){
     }
     else if (*read == 1) { //Se è stato premuto solo il pulsante di invio
         printf(RED"🤌Mamma Mia Ma Che Combini...!!🤌, inserisci qualcosa...\n"RST);
-
+        return 1;
     }
 }
 

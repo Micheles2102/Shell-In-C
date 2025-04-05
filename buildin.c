@@ -73,7 +73,7 @@ int cannolo_ls(char **toks){
     path=opendir(".");
     if(path==NULL){
         perror("Error with opendir\n");
-        exit(1);
+        return 1;
     }
     
     int i=1;
@@ -88,7 +88,8 @@ int cannolo_ls(char **toks){
             if(!strcmp(toks[1],ls_build[i].ls_command_to_execute)){
                 if(status2=(ls_build[i].foo)(path)){
                     printf("%s failed\n", ls_build[i].ls_command_to_execute);
-                    exit(1);
+                    closedir(path);
+                    return 1;
                 }
             }
             i++;
@@ -102,7 +103,7 @@ int cannolo_ls(char **toks){
 
     if(closedir(path)==-1){
         perror("Error while closing dir");
-        exit(1);
+        return 1;
     }
 
     return 0;

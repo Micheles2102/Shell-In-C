@@ -29,7 +29,7 @@ int pistacchio_ls(DIR* path){
             snprintf(paths,sizeof(paths),"%s/%s",".",ls->d_name);
             if(stat(paths,&st)==-1){
              perror("Error with stat");
-             exit(1);
+             return 1;
             }
             printf("P:%s FN:%-10s NL:%-10ld UI=%-10d LG:%-30s \r",get_permission(st.st_mode),ls->d_name,(long)st.st_nlink,st.st_uid,ctime(&st.st_ctime));
         }
@@ -38,7 +38,7 @@ int pistacchio_ls(DIR* path){
     return 0;
 }
 
-//ls -X lists all entries including those starting with periods (.), but excluding any . or .. entries.
+//ls -A lists all entries including those starting with periods (.), but excluding any . or .. entries.
 
 int mario_ls(DIR* path){
     struct dirent* ls;
@@ -51,7 +51,7 @@ int mario_ls(DIR* path){
             snprintf(paths,sizeof(paths),"%s/%s",".",ls->d_name);
             if(stat(paths,&st)==-1){
              perror("Error with stat");
-             exit(1);
+             return 1;
             }
             printf("P:%s FN:%-10s NL:%-10ld UI=%-10d LG:%-30s \r",get_permission(st.st_mode),ls->d_name,(long)st.st_nlink,st.st_uid,ctime(&st.st_ctime));
         }
@@ -71,7 +71,7 @@ int luigi_ls(DIR* path){
         snprintf(paths,sizeof(paths),"%s/%s",".",ls->d_name);
         if(stat(paths,&st)==-1){
          perror("Error with stat");
-         exit(1);
+         return 1;
         }
         printf("P:%s FN:%-10s NL:%-10ld UI=%-10d LG:%-30s \r",get_permission(st.st_mode),ls->d_name,(long)st.st_nlink,st.st_uid,ctime(&st.st_ctime));
     }
@@ -93,7 +93,7 @@ int panino_ls(DIR* path){
         snprintf(paths,sizeof(paths),"%s/%s",".",ls->d_name);       
         if(stat(paths,&st)==-1){
          perror("Error with stat");
-         exit(1);
+         return 1;
         }
         file_list=realloc(file_list,(file_count+1)*sizeof(FileInfo));
         if(file_list==NULL){
@@ -104,6 +104,9 @@ int panino_ls(DIR* path){
         file_list[file_count].name=strdup(ls->d_name);
         if(file_list[file_count].name==NULL){
             perror("Error with strdup");
+            for(int i=0;i<file_count;i++){
+                free(file_list[i].name);
+            }
             free(file_list);
             return 1;
         }

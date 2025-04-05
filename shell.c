@@ -5,6 +5,8 @@ int status=0;//Since the current state must be global and visible to everyone.
 command g_build[]=
 {
     {.command_to_execute="echo",.foo=carbonara_echo},
+    {.command_to_execute="pwd",.foo=pizza_pwd},
+    {.command_to_execute="ls",.foo=cannolo_ls},
     {.command_to_execute=NULL}, //Sentinel
 
 };
@@ -29,12 +31,17 @@ int main(int argc,char** argv){
            Chdirs(toks[1],cwd); //if chdir(path)==-1 cd failed else new cwd
         }
 
-        if(!strcmp(toks[0],g_build[0].command_to_execute)){
-            if ((status = (g_build[0].foo)(toks)))
-				printf("%s failed\n", g_build[0].command_to_execute);
-                continue;
+        for(int i=0;g_build[i].command_to_execute!=NULL;i++){
+            if(!strcmp(toks[0],g_build[i].command_to_execute)){
+                if ((status = (g_build[i].foo)(toks)))
+		    		printf("%s failed\n", g_build[i].command_to_execute);
+                    continue;
+            }
         }
-
+        //free toks
+        for(int i = 0; toks[i] != NULL; i++) {
+            free(toks[i]);
+        } 
 
         free(line);
         line=NULL;
